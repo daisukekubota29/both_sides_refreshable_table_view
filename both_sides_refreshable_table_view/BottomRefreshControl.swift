@@ -10,19 +10,22 @@ import UIKit
 
 private let height = CGFloat(60)
 
+private let maxHeight = height * 2
+
 class BottomRefreshControl: UIControl {
 
     private let indicator = BottomRefreshIndicator()
 
     private var refreshing: Bool = false
 
+    private var addedInsetBottom = CGFloat(0)
+
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 375, height: height))
-        backgroundColor = UIColor.red.withAlphaComponent(0.5)
+        backgroundColor = UIColor.clear
         addSubview(indicator)
         indicator.center = self.center
-        indicator.hidesWhenStopped = true
-//        isHidden = true
+        isHidden = true
     }
 
     override init(frame: CGRect) {
@@ -35,16 +38,15 @@ class BottomRefreshControl: UIControl {
 
     override var tintColor: UIColor! {
         get {
-            return indicator.tintColor
+            return indicator.color
         }
         set {
-            indicator.tintColor = newValue
+            indicator.color = newValue
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        debugPrint(#function)
     }
 
     var isRefreshing: Bool {
@@ -52,10 +54,10 @@ class BottomRefreshControl: UIControl {
     }
 
     private func setRefreshing(refreshing: Bool) {
-        debugPrint("setRefreshing(refresing: \(refreshing)), [\(self.refreshing)]")
         if self.refreshing != refreshing {
             self.refreshing = refreshing
             sendActions(for: .valueChanged)
+            indicator.startAnimating()
         }
     }
 
@@ -66,7 +68,8 @@ class BottomRefreshControl: UIControl {
         refreshing = true
         isHidden = false
         guard let scrollView = self.superview as? UIScrollView else { return }
-        scrollView.contentInset.bottom += self.bounds.size.height
+        addedInsetBottom += height
+        scrollView.contentInset.bottom += height
     }
 
     func endRefreshing() {
@@ -74,8 +77,10 @@ class BottomRefreshControl: UIControl {
             return
         }
         guard let scrollView = self.superview as? UIScrollView else { return }
-        scrollView.contentInset.bottom -= self.bounds.size.height
+        scrollView.contentInset.bottom -= addedInsetBottom
+        addedInsetBottom = 0
         isHidden = true
+        indicator.stopAnimating()
         refreshing = false
     }
 }
@@ -83,33 +88,42 @@ class BottomRefreshControl: UIControl {
 extension BottomRefreshControl {
     func update(scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
-        // 常にscrollViewのボトムに
-        var frame = self.frame
-        frame.origin.x = scrollView.bounds.origin.x + offset.x
-        frame.origin.y = scrollView.bounds.size.height - frame.size.height + offset.y
-        self.frame = frame
-
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        let difference = maximumOffset - currentOffset
+        if difference < -1 || refreshing {
+            // 常にscrollViewのボトムに
+            let frameHeight = difference >= 0 ? height : -difference
+            var frame = self.frame
+            frame.size.height = frameHeight
+            frame.origin.x = scrollView.bounds.origin.x + offset.x
+            frame.origin.y = scrollView.bounds.size.height - frame.size.height + offset.y
+            self.frame = frame
+            indicator.center = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
+        }
         let contentSize = scrollView.contentSize.height
         let tableSize = scrollView.frame.size.height - scrollView.contentInset.top - scrollView.contentInset.bottom
         let canLoadFromBottom = contentSize > tableSize
 
-        let currentOffset = scrollView.contentOffset.y
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        let difference = maximumOffset - currentOffset
-//        debugPrint("difference: \(difference)")
-
         if canLoadFromBottom, difference < -1, !refreshing {
             isHidden = false
-            let percent = -difference / self.bounds.size.height
-            indicator.percent = percent
-            
-            if !refreshing, scrollView.isDragging, difference < -self.bounds.size.height {
+            let percent = (-difference - height / 2) / (maxHeight - height / 2)
+
+            indicator.percent = percent >= 0 ? percent : 0
+            if !refreshing, scrollView.isDragging, difference < -maxHeight {
                 setRefreshing(refreshing: true)
-                let previousScrollBottomInset = scrollView.contentInset.bottom
-                scrollView.contentInset.bottom = previousScrollBottomInset + self.bounds.size.height
             }
         } else {
             isHidden = !refreshing
+        }
+    }
+
+    func scrollDidEndDraging(scrollView: UIScrollView, decelerate: Bool) {
+        if refreshing {
+            if addedInsetBottom > 0 { return }
+            let previousScrollBottomInset = scrollView.contentInset.bottom
+            scrollView.contentInset.bottom = previousScrollBottomInset + height
+            addedInsetBottom += height
         }
     }
 }

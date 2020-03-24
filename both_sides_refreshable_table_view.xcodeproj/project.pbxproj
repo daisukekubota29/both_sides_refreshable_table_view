@@ -15,7 +15,6 @@
 		25D934082428613400715DD7 /* BothSidesRefreshableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D934072428613400715DD7 /* BothSidesRefreshableTableView.swift */; };
 		25D9340A24286BF300715DD7 /* BottomRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9340924286BF300715DD7 /* BottomRefreshControl.swift */; };
 		25D9340C2428746200715DD7 /* SimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9340B2428746200715DD7 /* SimpleCell.swift */; };
-		25D9340E24288D5700715DD7 /* UIView+print.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9340D24288D5700715DD7 /* UIView+print.swift */; };
 		25D934102428A27F00715DD7 /* BottomRefreshIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9340F2428A27F00715DD7 /* BottomRefreshIndicator.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +29,6 @@
 		25D934072428613400715DD7 /* BothSidesRefreshableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothSidesRefreshableTableView.swift; sourceTree = "<group>"; };
 		25D9340924286BF300715DD7 /* BottomRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomRefreshControl.swift; sourceTree = "<group>"; };
 		25D9340B2428746200715DD7 /* SimpleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCell.swift; sourceTree = "<group>"; };
-		25D9340D24288D5700715DD7 /* UIView+print.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+print.swift"; sourceTree = "<group>"; };
 		25D9340F2428A27F00715DD7 /* BottomRefreshIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomRefreshIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,7 +71,6 @@
 				25D934072428613400715DD7 /* BothSidesRefreshableTableView.swift */,
 				25D9340924286BF300715DD7 /* BottomRefreshControl.swift */,
 				25D9340B2428746200715DD7 /* SimpleCell.swift */,
-				25D9340D24288D5700715DD7 /* UIView+print.swift */,
 				25D9340F2428A27F00715DD7 /* BottomRefreshIndicator.swift */,
 			);
 			path = both_sides_refreshable_table_view;
@@ -155,7 +152,6 @@
 				25D933F42428610B00715DD7 /* AppDelegate.swift in Sources */,
 				25D934102428A27F00715DD7 /* BottomRefreshIndicator.swift in Sources */,
 				25D9340A24286BF300715DD7 /* BottomRefreshControl.swift in Sources */,
-				25D9340E24288D5700715DD7 /* UIView+print.swift in Sources */,
 				25D9340C2428746200715DD7 /* SimpleCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

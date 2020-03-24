@@ -21,8 +21,6 @@ class BothSidesRefreshableTableView: UITableView {
                 frame.origin = CGPoint(x: 0, y: self.bounds.size.height - frame.size.height)
                 frame.size.width = self.bounds.size.width
                 bottomRefreshControl.frame = frame
-                self.printSuperviews()
-                self.printSubviews()
             }
         }
     }
@@ -40,7 +38,6 @@ class BothSidesRefreshableTableView: UITableView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        debugPrint(#function)
         super.delegate = self
     }
 }
@@ -65,6 +62,7 @@ extension BothSidesRefreshableTableView: UIScrollViewDelegate {
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         _delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
+        bottomRefreshControl?.scrollDidEndDraging(scrollView: scrollView, decelerate: decelerate)
     }
 
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {

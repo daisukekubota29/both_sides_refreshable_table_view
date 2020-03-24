@@ -64,9 +64,11 @@ class ViewController: UIViewController {
             tableView.delegate = self
             tableView.dataSource = self
             tableView.refreshControl = UIRefreshControl()
+            tableView.refreshControl?.tintColor = UIColor.blue
             tableView.refreshControl?.addTarget(self, action: #selector(refreshPrevious), for: .valueChanged)
 
             tableView.bottomRefreshControl = BottomRefreshControl()
+            tableView.bottomRefreshControl?.tintColor = UIColor.blue
             tableView.bottomRefreshControl?.addTarget(self, action: #selector(refreshNext), for: .valueChanged)
         }
     }
@@ -80,8 +82,6 @@ class ViewController: UIViewController {
 
 extension ViewController {
     @objc func refreshPrevious() {
-        debugPrint(#function)
-        tableView.refreshControl?.printSubviews()
         DispatchQueue.global().async {
             sleep(1)
             self.items.add(type: .top)
