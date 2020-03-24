@@ -12,12 +12,15 @@ private let height = CGFloat(60)
 
 private let maxHeight = height * 2
 
+/// BottomRefreshControl
 class BottomRefreshControl: UIControl {
 
+    /// IndicatorView
     private let indicator = BottomRefreshIndicator()
 
+    /// refreshing
     private var refreshing: Bool = false
-
+    /// addedInsetBottom in scrollView
     private var addedInsetBottom = CGFloat(0)
 
     init() {
