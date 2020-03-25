@@ -116,9 +116,7 @@ extension ViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.row == 0 {
-            tableView.refreshControl?.beginRefreshing()
-        }
+        tableView.cellForRow(at: indexPath)?.highlight(duration: 2, highlightColor: UIColor.red.withAlphaComponent(0.8))
     }
 }
 
