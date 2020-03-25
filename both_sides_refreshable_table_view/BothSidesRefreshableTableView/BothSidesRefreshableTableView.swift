@@ -8,7 +8,9 @@
 
 import UIKit
 
+/// bottomでもPullToRefresh可能なUITableView
 class BothSidesRefreshableTableView: UITableView {
+    /// BottomRefreshControl
     var bottomRefreshControl: BottomRefreshControl? {
         willSet {
             bottomRefreshControl?.endRefreshing()
@@ -136,8 +138,17 @@ extension BothSidesRefreshableTableView: UITableViewDelegate {
         return height
     }
 
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard let height = _delegate?.tableView?(tableView, heightForHeaderInSection: section) else {
+            return 0
+        }
+        return height
+    }
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        guard let height = _delegate?.tableView?(tableView, heightForFooterInSection: section) else { return tableView.estimatedSectionFooterHeight }
+        guard let height = _delegate?.tableView?(tableView, heightForFooterInSection: section) else {
+            return 0
+        }
         return height
     }
 
@@ -147,12 +158,16 @@ extension BothSidesRefreshableTableView: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        guard let height = _delegate?.tableView?(tableView, estimatedHeightForHeaderInSection: section) else { return tableView.estimatedSectionHeaderHeight }
+        guard let height = _delegate?.tableView?(tableView, estimatedHeightForHeaderInSection: section) else {
+            return tableView.estimatedSectionHeaderHeight
+        }
         return height
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        guard let height = _delegate?.tableView?(tableView, estimatedHeightForFooterInSection: section) else { return tableView.estimatedSectionFooterHeight }
+        guard let height = _delegate?.tableView?(tableView, estimatedHeightForFooterInSection: section) else {
+            return tableView.estimatedSectionFooterHeight
+        }
         return height
     }
 
