@@ -91,16 +91,24 @@ class BottomRefreshControl: UIControl {
 extension BottomRefreshControl {
     func update(scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
+        let bottomInset = scrollView.contentInset.bottom - addedInsetBottom
         let currentOffset = scrollView.contentOffset.y
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height + bottomInset
         let difference = maximumOffset - currentOffset
         if difference < -1 || refreshing {
             // 常にscrollViewのボトムに
-            let frameHeight = difference >= 0 ? height : -difference
             var frame = self.frame
-            frame.size.height = frameHeight
+            if refreshing {
+                if -difference < height {
+                    frame.size.height = height
+                } else {
+                    frame.size.height = -difference
+                }
+            } else {
+                frame.size.height = -difference
+            }
             frame.origin.x = scrollView.bounds.origin.x + offset.x
-            frame.origin.y = scrollView.bounds.size.height - frame.size.height + offset.y
+            frame.origin.y = scrollView.bounds.size.height - frame.size.height + offset.y - bottomInset
             self.frame = frame
             indicator.center = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
         }

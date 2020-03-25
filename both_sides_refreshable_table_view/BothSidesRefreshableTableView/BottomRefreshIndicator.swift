@@ -207,10 +207,11 @@ class CircleLayer: CALayer {
         let radius = size / 2
         let shortRadius = radius - CircleLayer.lineHeight
         (0..<lineCount).forEach {
+            let angle = $0 * (360 / lineCount)
             ctx.beginPath()
             ctx.setStrokeColor(color.withAlphaComponent(CGFloat(lineCount - $0) / CGFloat(lineCount) * 0.8 + 0.2).cgColor)
-            ctx.move(to: position(center: center, radius: radius, angle: $0 * 30))
-            ctx.addLine(to: position(center: center, radius: shortRadius, angle: $0 * 30))
+            ctx.move(to: position(center: center, radius: radius, angle: angle))
+            ctx.addLine(to: position(center: center, radius: shortRadius, angle: angle))
             ctx.strokePath()
         }
     }

@@ -62,13 +62,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: BothSidesRefreshableTableView! {
         didSet {
             tableView.delegate = self
+            var inset = tableView.contentInset
+            inset.bottom = 50
+            inset.top = 50
+            tableView.contentInset = inset
             tableView.dataSource = self
             tableView.refreshControl = UIRefreshControl()
+            tableView.refreshControl?.backgroundColor = UIColor.red.withAlphaComponent(0.5)
             tableView.refreshControl?.tintColor = UIColor.blue
             tableView.refreshControl?.addTarget(self, action: #selector(refreshPrevious), for: .valueChanged)
 
             tableView.bottomRefreshControl = BottomRefreshControl()
             tableView.bottomRefreshControl?.tintColor = UIColor.blue
+            tableView.bottomRefreshControl?.backgroundColor = UIColor.red.withAlphaComponent(0.5)
             tableView.bottomRefreshControl?.addTarget(self, action: #selector(refreshNext), for: .valueChanged)
         }
     }

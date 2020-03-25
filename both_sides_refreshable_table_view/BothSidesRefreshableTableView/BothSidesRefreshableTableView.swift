@@ -10,6 +10,9 @@ import UIKit
 
 class BothSidesRefreshableTableView: UITableView {
     var bottomRefreshControl: BottomRefreshControl? {
+        willSet {
+            bottomRefreshControl?.endRefreshing()
+        }
         didSet {
             if let oldValue = oldValue {
                 oldValue.removeFromSuperview()

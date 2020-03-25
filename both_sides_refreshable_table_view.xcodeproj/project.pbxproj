@@ -62,18 +62,26 @@
 		25D933F22428610B00715DD7 /* both_sides_refreshable_table_view */ = {
 			isa = PBXGroup;
 			children = (
+				25D93418242B1C5D00715DD7 /* BothSidesRefreshableTableView */,
 				25D933F32428610B00715DD7 /* AppDelegate.swift */,
 				25D933F72428610B00715DD7 /* ViewController.swift */,
 				25D933F92428610B00715DD7 /* Main.storyboard */,
 				25D933FC2428610D00715DD7 /* Assets.xcassets */,
 				25D933FE2428610D00715DD7 /* LaunchScreen.storyboard */,
 				25D934012428610D00715DD7 /* Info.plist */,
-				25D934072428613400715DD7 /* BothSidesRefreshableTableView.swift */,
-				25D9340924286BF300715DD7 /* BottomRefreshControl.swift */,
 				25D9340B2428746200715DD7 /* SimpleCell.swift */,
-				25D9340F2428A27F00715DD7 /* BottomRefreshIndicator.swift */,
 			);
 			path = both_sides_refreshable_table_view;
+			sourceTree = "<group>";
+		};
+		25D93418242B1C5D00715DD7 /* BothSidesRefreshableTableView */ = {
+			isa = PBXGroup;
+			children = (
+				25D934072428613400715DD7 /* BothSidesRefreshableTableView.swift */,
+				25D9340924286BF300715DD7 /* BottomRefreshControl.swift */,
+				25D9340F2428A27F00715DD7 /* BottomRefreshIndicator.swift */,
+			);
+			path = BothSidesRefreshableTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
